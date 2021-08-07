@@ -1,8 +1,60 @@
+
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:student_app/date.dart';
+import 'package:http/http.dart' as http;
 
+import 'dart:convert';
+// var x = 5;
 
+// void func (yyyyy) {
+//   print(yyyyy);
+// }
+
+// void main() {
+//   print(x);
+//   var y = 6;
+
+//   func(y);
+
+// }
+// print(x)
+/*
+Безымянные функций
+void func(calc) {
+
+  calc();
+}
+
+void main () {
+
+  func(
+    () {print(5454); }
+    ,
+    );
+}
+*/
+
+/*
+GestureDetector(
+  onTap: (){
+    print(545454);
+    // print(api_data[index]['city']);
+   },
+  child: Container(child:
+    Image.network("")
+    )
+)
+*/
+
+/**
+ // * String operations
+ .toString();
+ .split()
+ .join
+ .format  
+ */
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
 
@@ -19,40 +71,75 @@ class _HomeState extends State<Home> {
     {'id': 2, 'name': 'Arren','image':'https://static.onecms.io/wp-content/uploads/sites/13/2017/02/28/just-friends-star-header.jpg'},
   ];
 
+
+
+
   // orders[0]['id'];
+
+  var api_data = [];
+  void getData() async {
+    var url = Uri.parse('https://init.kz:3407/api/');
+    var response = http.get(url).then((reborn) {
+      // // print(reborn[3].toString());
+      var data = jsonDecode(reborn.body);
+      for (var i = 0; i< data.length; i++) {
+        var object = {};
+        object["id"] = data[i]['id'];
+        object['name'] = data[i]['name'];
+        object['image'] = data[i]['image'];
+        object['description'] = data[i]['description'];
+        object['city'] = data[i]['city'];
+        object['light'] = false;
+
+        api_data.add(object);
+      
+      }
+    setState(() {
+      
+    });
+      // print(date[3].toString());
+      // debugPrint(date.body.toString());
+    });
+    
+     }
+/*
+  void getData() async {
+
+      var url = Uri.parse("https://init.kz:3407/api/");
+      // var response =  http.get(url).then((data) => {
+        // data
+      // });
+
+      var response1 = await http.get(url);
+
+      var data = jsonDecode(response1.body);
+      // var x = {'key' : 'value'};
+      for (var i = 0; i < data.length; i++) {
+        var object = {};
+        object['id'] = data[i]['id'];
+        object['name'] = data[i]['name'];
+        object['image'] = data[i]['image'];
+        object['description'] = data[i]['description'];
+        object['city'] = data[i]['city'];
+
+        api_data.add(object);
+      }
+
+      debugPrint(api_data.toString());
+
+      setState(() {
+      });
+      // debugPrint(data[0]['id'].toString());
+
+  }
+  */
 
   var orders_mock = [];
 
   @override
   void initState() {
-    /*
-      var order1 = Order();
-      print(order1.id);
-      print(order1.name);
-      print(order1.country);
-    */
-
-    var order1 = Order("1234","sultan", "Iphone17");
-    print('ИД: ${order1.id} ${order1.name} \t ${order1.buy} \t ${Order.quantity}');
-
-    var order2 = Order("2","Aren", "Iphone7");
-    print('ИД: ${order2.id} \t ${order2.name} \t \t ${order2.buy} \t ${Order.quantity}');
-
-    var order3 = Order("3","Mouzer", "Iphone2");
-    print('ИД: ${order3.id} \t ${order3.name} \t ${order3.buy} \t ${Order.quantity}');
-
     
-    orders_mock.add(order1);
-    // orders_mock.length
-    // Длинна нашего листа
-    print(orders_mock.length);
-
-    orders_mock.add(order2);
-    print(orders_mock.length);
-
-    orders_mock.add(order3);
-    print(orders_mock.length);
-
+    getData();
 
     super.initState();
   }
@@ -81,12 +168,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverList(delegate: SliverChildListDelegate(
+          SliverList(
+            delegate: SliverChildListDelegate(
             [
               ListTile(
                 tileColor: Colors.red,
                 title: Text('sdsd'),
               ),
+              
                ListTile(
                 tileColor: Colors.green,
                                 title: Text('dferrfgrege'),
@@ -101,25 +190,7 @@ class _HomeState extends State<Home> {
               ),
             ]
           )),
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200.0,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 4.0,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.teal[100 * (index % 9)],
-                  child: Text('grid item $index'),
-                );
-              },
-              childCount: 20,
-            ),
-          ),
-          /*
+               /*
           SliverList(
               delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                 // To convert this infinite list to a list with three items,
@@ -146,7 +217,7 @@ class _HomeState extends State<Home> {
           */
 
 
-          SliverList(
+        /*  SliverList(
             delegate: SliverChildBuilderDelegate(
                 
               (BuildContext context, int index) {
@@ -160,20 +231,52 @@ class _HomeState extends State<Home> {
                   border: Border.all(color: Colors.black,width: 2)
                 ),
                   child: Stack(
-                    children: [
-                      Text(orders_mock[index].name)
+                    children: [ 
+                      Image.network(api_data[index]['image'], fit: BoxFit.fitHeight,),
+                     
+                      Text(api_data[index]['name']),
+
                       ],
                   ),
                 
                 );
               },
-
-              childCount: orders_mock.length,
+              childCount: api_data.length,
 
             ),
 
-          ),
+          ),*/
 
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                var x= false;
+                return 
+                  GestureDetector(
+                    onTap: () {
+                      debugPrint("44");
+                      api_data[index]['light'] = !api_data[index]['light'];
+
+                      setState(() {
+                      });
+                    },
+                    child:Container(
+                      alignment: Alignment.center,
+
+                      color: api_data[index]['light'] ?Colors.limeAccent : Colors.lightGreen[100 ],
+                      child: Column(children: [
+                        Text( api_data[index]['name'].toString() )
+                      ],
+                    ),
+                  )
+                );
+              },
+              childCount: api_data.length,
+            ),gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 1/2,))
         ],
       ),
     );

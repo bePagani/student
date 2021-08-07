@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:student_app/Home.dart';
-import 'package:student_app/date.dart';
 
 void main() {
 
