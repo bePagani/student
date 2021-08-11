@@ -89,6 +89,7 @@ class _HomeState extends State<Home> {
         object['image'] = data[i]['image'];
         object['description'] = data[i]['description'];
         object['city'] = data[i]['city'];
+
         object['light'] = false;
 
         api_data.add(object);
@@ -263,7 +264,7 @@ class _HomeState extends State<Home> {
                     child:Container(
                       alignment: Alignment.center,
 
-                      color: api_data[index]['light'] ?Colors.limeAccent : Colors.lightGreen[100 ],
+                      color: api_data[index]['light'] ? Colors.limeAccent : Colors.lightGreen[100 ],
                       child: Column(children: [
                         Text( api_data[index]['name'].toString() )
                       ],

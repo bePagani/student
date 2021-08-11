@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:student_app/Home.dart';
+import 'package:student_app/page/barPage.dart';
+import 'package:student_app/page/home.dart';
 
 void main() {
-
-    /*
-    Orders order1 = Orders(1, "Arny", "Mif", "https://static.onecms.io/wp-content/uploads/sites/13/2017/02/28/just-friends-star-header.jpg");
-    Orders order2 = Orders(2, "Linda", "Mif", "https://static.onecms.io/wp-content/uploads/sites/13/2017/02/28/just-friends-star-header.jpg");
-    Orders order3 = Orders(3, "Rose", "Mif", "https://pbs.twimg.com/media/EgX3T-1UYAEBRCX.jpg");
-    
-    orders_mock.add(order1);
-    orders_mock.add(order2);
-    orders_mock.add(order3);
-
-    */
 
   runApp(MyApp());
 }
@@ -35,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: BarPage(),
     );
   }
 }
